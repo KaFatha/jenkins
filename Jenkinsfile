@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_HUB_USER = 'username_dockerhub_kamu'
+        DOCKER_HUB_USER = 'fathathursina'
         IMAGE_NAME = 'java-maven-app'
     }
 
