@@ -6,14 +6,14 @@ pipeline {
     }
 
     environment {
-        DOCKER_HUB_USER = 'username_dockerhub_kamu'
+        DOCKER_HUB_USER = 'fathathursina'
         IMAGE_NAME = 'java-maven-app'
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'jenkins-job', url: 'https://github.com/orion2182/java-maven-app.git'
+                git branch: 'jenkins-job', url: 'https://github.com/KaFatha/jenkins.git'
             }
         }
 
