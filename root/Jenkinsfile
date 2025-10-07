@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven-app'
+    }
+
+    environment {
+        DOCKER_HUB_USER = 'username_dockerhub_kamu'
+        IMAGE_NAME = 'java-maven-app'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'jenkins-job', url: 'https://github.com/orion2182/java-maven-app.git'
+            }
+        }
+
+        stage('Build Maven App') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t $DOCKER_HUB_USER/$IMAGE_NAME:$BUILD_NUMBER .'
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh '''
+                        echo $PASSWORD | docker login -u $USERNAME --password-stdin
+                        docker push $DOCKER_HUB_USER/$IMAGE_NAME:$BUILD_NUMBER
+                    '''
+                }
+            }
+        }
+    }
+}
