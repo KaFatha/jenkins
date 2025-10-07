@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'jenkins-job', url: 'https://github.com/KaFatha/jenkins.git'
+                git branch: 'master', url: 'https://github.com/KaFatha/jenkins.git'
             }
         }
 
